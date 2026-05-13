@@ -60,6 +60,7 @@ jobs:
           -Dsonar.login=${SONAR_TOKEN}
 
   # Paso 6: Construcción y publicación en Docker Hub
+ # Paso 6: Construcción y publicación en Docker Hub
   build-and-push-docker:
     runs-on: ubuntu-latest
     needs: analisis-sonarcloud
@@ -71,6 +72,9 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      # ESTA ES LA LÍNEA NUEVA PARA DAR PERMISOS:
+      - name: Make mvnw executable
+        run: chmod +x mvnw
       - name: Build with Maven
         run: ./mvnw clean package -DskipTests
       - name: Build Docker image
